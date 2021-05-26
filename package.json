@@ -1,6 +1,6 @@
 {
   "name": "aaro-scripts",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Useful scripts for aaro erp",
   "main": "index.js",
   "scripts": {
