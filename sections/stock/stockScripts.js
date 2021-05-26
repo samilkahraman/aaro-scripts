@@ -37,4 +37,4 @@ const getAllProducts = async (aaro, params = {}) => {
   }
 };
 
-exports.getAllProducts = getAllProducts;
+module.exports = getAllProducts;
