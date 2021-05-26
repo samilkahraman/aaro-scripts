@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/samilkahraman/aaro-scripts/issues"
   },
-  "homepage": "https://github.com/samilkahraman/aaro-scripts#readme"
+  "homepage": "https://github.com/samilkahraman/aaro-scripts#readme",
+  "dependencies": {
+    "aaro": "^1.2.0"
+  }
 }
