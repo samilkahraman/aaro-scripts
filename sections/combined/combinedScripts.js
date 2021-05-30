@@ -1,5 +1,5 @@
 const getAllProducts = require("../stock/stockScripts");
-const getAllPriceListItems = require("../priceList/priceListScripts");
+const { getAllPriceListItems } = require("../priceList/priceListScripts");
 require("../helpers/arrayHelper");
 
 /**
