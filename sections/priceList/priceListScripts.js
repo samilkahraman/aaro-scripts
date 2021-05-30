@@ -3,7 +3,7 @@ const { sleep } = require("../helpers/sleep");
 /**
  * @description It retrieves all the items in the price list
  * @param {object} aaro object
- * @param {object} params extra limitations like EsnekAramaKisiti="PRF.PRVU"
+ * @param {object} params extra limitations like FiyatListesiID=84
  * @returns {array}
  */
 const getAllPriceListItems = async (aaro, params = {}) => {
@@ -39,4 +39,37 @@ const getAllPriceListItems = async (aaro, params = {}) => {
   }
 };
 
-module.exports = getAllPriceListItems;
+/**
+ * @description It removes all the passive products from a price list.
+ * When you duplicate a price list and turn a product into a passive which is already in the list
+ * Remains on the list. With that method you can see them.
+ * @param {object} aaro authenticated object
+ * @param {integer} priceListID
+ * @return {array} of passive products
+ */
+const showPassiveItemsOnPriceList = async (aaro, priceListID) => {
+  try {
+    const passiveItems = [];
+    const products = await getAllPriceListItems(aaro, {
+      FiyatListesiID: priceListID,
+    });
+
+    const search = products.map((el) => el.StokID);
+    while (search.length) {
+      const partialSearch = search.splice(0, 100);
+      const searchQuery = partialSearch.join(",");
+      const detailedProducts = await aaro
+        .get("Stok", { SayfaSatirSayisi: 100, StokID: searchQuery })
+        .then((response) => response.data.Model);
+      detailedProducts.forEach((product) =>
+        product.Durum == false ? passiveItems.push(product) : ""
+      );
+    }
+
+    return passiveItems;
+  } catch (err) {
+    throw err;
+  }
+};
+
+module.exports = { getAllPriceListItems, showPassiveItemsOnPriceList };
