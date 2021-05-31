@@ -72,4 +72,48 @@ const showPassiveItemsOnPriceList = async (aaro, priceListID) => {
   }
 };
 
-module.exports = { getAllPriceListItems, showPassiveItemsOnPriceList };
+const getAllPriceListItemsWithStocks = async (aaro, priceListID) => {
+  const productAndStocks = [];
+  const products = await getAllPriceListItems(aaro, {
+    FiyatListesiID: priceListID,
+  });
+  while (products.length) {
+    const partialSearch = products.splice(0, 10);
+    const searchQuery = partialSearch.map((el) => el.StokID).join(",");
+    const stockAmounts = await aaro
+      .get("Stok/StokMiktarListe", {
+        SayfaSatirSayisi: 100,
+        StokID: searchQuery,
+      })
+      .then((response) => response.data.Model);
+    console.log(stockAmounts.length);
+    partialSearch.forEach((product) => {
+      const temporaryProduct = {};
+      temporaryProduct.StokKodu = product.StokKodu;
+      temporaryProduct.StokAdi = product.StokAdi;
+      temporaryProduct.Fiyat = product.Fiyat;
+      temporaryProduct.Depolar = {};
+      stockAmounts.forEach((stock) => {
+        if (stock.StokKodu == product.StokKodu) {
+          temporaryProduct.Depolar[stock.DepoAdi] = {
+            DepoID: stock.DepoID,
+            DepoKodu: stock.DepoKodu,
+            DepoAdi: stock.DepoAdi,
+            Brm1ID: stock.Brm1ID,
+            Brm1Kodu: stock.Brm1Kodu,
+            Brm1Adi: stock.Brm1Adi,
+            Miktar: stock.Miktar,
+          };
+        }
+      });
+      productAndStocks.push(temporaryProduct);
+    });
+    return productAndStocks;
+  }
+};
+
+module.exports = {
+  getAllPriceListItems,
+  showPassiveItemsOnPriceList,
+  getAllPriceListItemsWithStocks,
+};
