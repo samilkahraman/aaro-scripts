@@ -108,8 +108,8 @@ const getAllPriceListItemsWithStocks = async (aaro, priceListID) => {
       });
       productAndStocks.push(temporaryProduct);
     });
-    return productAndStocks;
   }
+  return productAndStocks;
 };
 
 module.exports = {
