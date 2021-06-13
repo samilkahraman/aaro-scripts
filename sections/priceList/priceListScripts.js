@@ -86,7 +86,6 @@ const getAllPriceListItemsWithStocks = async (aaro, priceListID) => {
         StokID: searchQuery,
       })
       .then((response) => response.data.Model);
-    console.log(stockAmounts.length);
     partialSearch.forEach((product) => {
       const temporaryProduct = {};
       temporaryProduct.StokKodu = product.StokKodu;
