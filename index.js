@@ -1,4 +1,7 @@
-const getAllProducts = require("./sections/stock/stockScripts");
+const {
+  getAllProducts,
+  getAllSales,
+} = require("./sections/stock/stockScripts");
 const {
   getAllPriceListItems,
   showPassiveItemsOnPriceList,
@@ -16,4 +19,5 @@ module.exports = {
   getAllPriceListItemsWithStocks,
   getStocksForPriceList,
   getAllData,
+  getAllSales,
 };
