@@ -1,4 +1,4 @@
-const getAllProducts = require("../stock/stockScripts");
+const { getAllProducts } = require("../stock/stockScripts");
 const { getAllPriceListItems } = require("../priceList/priceListScripts");
 const { diff } = require("../helpers/arrayHelper");
 const { sleep } = require("../helpers/sleep");
